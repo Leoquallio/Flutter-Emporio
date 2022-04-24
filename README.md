@@ -9,6 +9,8 @@ Daniel Petroni
 
 Léo da Silva Quallio
 
+José Matias
+
 # Tecnologias usadas:
   
 • Flutter
