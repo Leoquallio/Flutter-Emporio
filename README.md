@@ -1,16 +1,24 @@
-# flutter_emporio
+# Emporio-da-cidade
+Projeto de aplicação de uma venda virtual, com o objetivo de explorar os principais recursos da tecnologia e como integrá-las de maneira produtiva e eficiente para o cliente. O projeto é construído durante os cursos Desenvolvimento de Software, pelos alunos de ADS na Univerdsidade São Francisco Polo Itatiba.
 
-A new Flutter project.
+# Desenvolvedores
 
-## Getting Started
+Ana Larysa Silva Lima
 
-This project is a starting point for a Flutter application.
+Daniel Petroni
 
-A few resources to get you started if this is your first Flutter project:
+Léo da Silva Quallio
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+# Tecnologias usadas:
+  
+• Flutter
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Como executar na sua máquina:
+
+• Instalar o flutter na sua máquina.
+
+• Clone o repositório para sua máquina executando o seguindo comando no terminal:
+Git clone https://github.com/Leoquallio/Flutter-Emporio.git
+
+• Navegue até a pasta do projeto no terminal e execute o seguinte comando:
+Flutter run 
