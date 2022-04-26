@@ -49,14 +49,25 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           Visibility(
             visible: openDrawer,
-            child: CustomDrawer((int indexSelectedMenu) {
-              setState(() {
-                if (size.width <= 1000) {
-                  openDrawer = false;
+            child: GestureDetector(
+              onHorizontalDragUpdate: (details) {
+                if (details.primaryDelta! < 0) {
+                  setState(() {
+                    openDrawer = false;
+                  });
                 }
-                indexWidget = indexSelectedMenu;
-              });
-            }),
+              },
+              child: CustomDrawer((int indexSelectedMenu) {
+                setState(
+                  () {
+                    if (size.width <= 1000) {
+                      openDrawer = false;
+                    }
+                    indexWidget = indexSelectedMenu;
+                  },
+                );
+              }, indexWidget),
+            ),
           ),
         ],
       ),

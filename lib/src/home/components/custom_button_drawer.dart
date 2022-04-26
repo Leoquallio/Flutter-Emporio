@@ -5,23 +5,29 @@ class CustomButtonDrawer extends StatelessWidget {
   final double height;
   final double width;
   final String text;
-  const CustomButtonDrawer(this.height, this.width, this.text, {Key? key})
+  final bool isSelected;
+  const CustomButtonDrawer(this.height, this.width, this.text, this.isSelected,
+      {Key? key})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: Container(
-        decoration: BoxDecoration(
-            color: ColorsApp.kPrimaryColor,
-            borderRadius: BorderRadius.circular(30)),
+        decoration: isSelected
+            ? BoxDecoration(
+                color: ColorsApp.kPrimaryColor,
+                borderRadius: BorderRadius.circular(30))
+            : const BoxDecoration(),
         width: width,
         height: height,
-        child: Center(
+        child: Padding(
+          padding: EdgeInsets.only(top: size.height * 0.0175, left: 10),
           child: Text(
             text,
-            style: const TextStyle(color: Colors.white),
+            style: TextStyle(color: isSelected ? Colors.white : Colors.black),
           ),
         ),
       ),

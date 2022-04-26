@@ -4,7 +4,9 @@ import 'package:flutter_emporio/src/themes/colors_app.dart';
 
 class CustomDrawer extends StatelessWidget {
   final Function onTapListMenu;
-  CustomDrawer(this.onTapListMenu, {Key? key}) : super(key: key);
+  final int indexWidget;
+  CustomDrawer(this.onTapListMenu, this.indexWidget, {Key? key})
+      : super(key: key);
 
   final List<String> listMenuDrawer = [
     'Dashboard',
@@ -13,6 +15,7 @@ class CustomDrawer extends StatelessWidget {
     'Clientes',
     'Fornecedores'
   ];
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -33,11 +36,8 @@ class CustomDrawer extends StatelessWidget {
               itemCount: listMenuDrawer.length,
               itemBuilder: (context, index) => GestureDetector(
                 onTap: () => onTapListMenu(index),
-                child: CustomButtonDrawer(
-                  size.height * 0.05,
-                  double.infinity,
-                  listMenuDrawer[index],
-                ),
+                child: CustomButtonDrawer(size.height * 0.05, double.infinity,
+                    listMenuDrawer[index], indexWidget == index),
               ),
             )
           ],
