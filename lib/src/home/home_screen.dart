@@ -14,7 +14,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int indexWidget = 0;
   List<Widget> screens = [
     Container(color: Colors.red, height: double.infinity, width: 500),
-    ProductScreen(),
+    const ProductScreen(),
     Container(
         color: Colors.blue, height: double.infinity, width: double.infinity),
     Container(
