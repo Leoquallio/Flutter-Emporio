@@ -24,7 +24,7 @@ class CustomButtonDrawer extends StatelessWidget {
         width: width,
         height: height,
         child: Padding(
-          padding: EdgeInsets.only(top: size.height * 0.0175, left: 10),
+          padding: EdgeInsets.only(top: size.height * 0.0173, left: 10),
           child: Text(
             text,
             style: TextStyle(color: isSelected ? Colors.white : Colors.black),
