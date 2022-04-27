@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_emporio/src/home/components/custom_drawer.dart';
-import 'package:flutter_emporio/src/product/product_screen.dart';
+import 'package:flutter_emporio/src/view/product/product_screen.dart';
+
+import 'components/custom_drawer.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);

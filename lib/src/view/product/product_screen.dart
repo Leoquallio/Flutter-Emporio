@@ -36,6 +36,10 @@ class _ProductScreenState extends State<ProductScreen> {
                         padding: const EdgeInsets.all(8.0),
                         child: TextField(
                           decoration: InputDecoration(
+                              prefixIconColor: Colors.red,
+                              iconColor: Colors.red,
+                              fillColor: Colors.red,
+                              hoverColor: Colors.red,
                               prefixIcon: Icon(Icons.search),
                               border: InputBorder.none),
                         ),
