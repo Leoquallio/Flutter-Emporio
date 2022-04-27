@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_emporio/src/home/home_screen.dart';
+
 import 'package:flutter_emporio/src/themes/custom_theme_data.dart';
+import 'package:flutter_emporio/src/view/home/home_screen.dart';
 
 void main() {
   runApp(const App());
