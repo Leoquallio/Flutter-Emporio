@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_emporio/src/home/components/custom_drawer.dart';
+import 'package:flutter_emporio/src/view/product/product_screen.dart';
+
+import 'components/custom_drawer.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -12,10 +14,8 @@ class _HomeScreenState extends State<HomeScreen> {
   bool openDrawer = false;
   int indexWidget = 0;
   List<Widget> screens = [
-    Container(
-        color: Colors.red, height: double.infinity, width: double.infinity),
-    Container(
-        color: Colors.black, height: double.infinity, width: double.infinity),
+    Container(color: Colors.red, height: double.infinity, width: 500),
+    const ProductScreen(),
     Container(
         color: Colors.blue, height: double.infinity, width: double.infinity),
     Container(
@@ -29,24 +29,20 @@ class _HomeScreenState extends State<HomeScreen> {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      body: Stack(
-        children: [
-          screens[indexWidget],
-          Visibility(
-            visible: !openDrawer,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: IconButton(
-                icon: const Icon(Icons.menu),
-                onPressed: () {
+      appBar: !openDrawer
+          ? AppBar(
+              leading: GestureDetector(
+                child: const Icon(Icons.menu),
+                onTap: () {
                   setState(() {
                     openDrawer = true;
                   });
                 },
               ),
-            ),
-          ),
+            )
+          : null,
+      body: Row(
+        children: [
           Visibility(
             visible: openDrawer,
             child: GestureDetector(
@@ -69,6 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
               }, indexWidget),
             ),
           ),
+          screens[indexWidget],
         ],
       ),
     );
