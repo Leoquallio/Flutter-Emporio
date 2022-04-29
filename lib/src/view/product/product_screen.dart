@@ -77,7 +77,7 @@ class _ProductScreenState extends State<ProductScreen> {
                               : DataTable(
                                   columnSpacing: size.width <= 1000
                                       ? size.width * 0.07
-                                      : size.width * 0.1,
+                                      : size.width * 0.07,
                                   columns: const [
                                     DataColumn(label: Text("Id")),
                                     DataColumn(label: Text("Nome")),
@@ -100,14 +100,14 @@ class _ProductScreenState extends State<ProductScreen> {
                                                     : ''),
                                               ),
                                               DataCell(
-                                                Text(product.valorProduto !=
+                                                Text(product.valorProdutoInCents !=
                                                         null
-                                                    ? 'R\$ ${product.idProduto}'
+                                                    ? 'R\$ ${product.valorProdutoInCents! / 1000}'
                                                     : ''),
                                               ),
                                               DataCell(
                                                 Text(product.qtdEstoque != null
-                                                    ? product.idProduto
+                                                    ? product.qtdEstoque
                                                         .toString()
                                                     : ''),
                                               ),

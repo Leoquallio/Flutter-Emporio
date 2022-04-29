@@ -1,9 +1,10 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_emporio/src/controller/product_controller.dart';
+import 'package:flutter_emporio/src/repository.dart/product_repository.dart';
 
 import 'package:flutter_emporio/src/themes/custom_theme_data.dart';
 import 'package:flutter_emporio/src/view/home/home_screen.dart';
-import 'package:flutter_emporio/src/view/product/product_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -21,7 +22,13 @@ class App extends StatelessWidget {
         home: MultiProvider(
           providers: [
             ChangeNotifierProvider<ProductController>(
-                lazy: true, create: (context) => ProductController()),
+              lazy: true,
+              create: (context) => ProductController(
+                ProductRepository(
+                  Dio(),
+                ),
+              ),
+            ),
           ],
           child: const HomeScreen(),
         ),
