@@ -4,6 +4,7 @@ import 'package:flutter_emporio/src/controller/product_controller.dart';
 import 'package:flutter_emporio/src/repository.dart/product_repository.dart';
 
 import 'package:flutter_emporio/src/themes/custom_theme_data.dart';
+import 'package:flutter_emporio/src/utils/custom_dio.dart';
 import 'package:flutter_emporio/src/view/home/home_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -21,11 +22,14 @@ class App extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         home: MultiProvider(
           providers: [
+            Provider<CustomDio>(
+              create: (context) => CustomDio(Dio()),
+            ),
             ChangeNotifierProvider<ProductController>(
               lazy: true,
               create: (context) => ProductController(
                 ProductRepository(
-                  Dio(),
+                  Provider.of<CustomDio>(context, listen: false),
                 ),
               ),
             ),
