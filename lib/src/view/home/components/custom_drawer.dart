@@ -23,7 +23,7 @@ class CustomDrawer extends StatelessWidget {
     return Container(
       height: double.infinity,
       width: size.width <= 800 ? size.width * 0.55 : size.width * 0.25,
-      color: ColorsApp.kSecondColor,
+      color: ColorsApp.kSecondColor.withOpacity(0.5),
       child: Padding(
         padding: const EdgeInsets.only(left: 10, right: 10),
         child: Column(

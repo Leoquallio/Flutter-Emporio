@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_emporio/src/model/produto_model.dart';
+import 'package:flutter_emporio/src/controller/new_product_controller.dart';
+import 'package:flutter_emporio/src/controller/product_controller.dart';
+import 'package:flutter_emporio/src/repository/product_repository.dart';
 import 'package:flutter_emporio/src/themes/colors_app.dart';
-import 'package:flutter_emporio/src/view/widgets/custom_button_circular.dart';
+import 'package:flutter_emporio/src/view/product/components/data_table_product.dart';
+import 'package:flutter_emporio/src/view/product/components/new_product.dart';
+import 'package:flutter_emporio/src/widgets/custom_button_circular.dart';
+import 'package:provider/provider.dart';
 
 class ProductScreen extends StatefulWidget {
   const ProductScreen({Key? key}) : super(key: key);
@@ -11,24 +16,23 @@ class ProductScreen extends StatefulWidget {
 }
 
 class _ProductScreenState extends State<ProductScreen> {
-  final List<Produto> products = [
-    Produto(
-        idProduto: 2,
-        nomeProduto: "Coca",
-        valorProduto: 5.52,
-        dataValidadeProduto: DateTime.now().toString(),
-        descricaoProduto: "Gostoso",
-        gtinProduto: "514747",
-        qtdEstoque: 5),
-    Produto(
-        idProduto: 5,
-        valorProduto: 10.00,
-        nomeProduto: "Coca Cola",
-        dataValidadeProduto: DateTime.now().toString(),
-        descricaoProduto: "Gostoso",
-        gtinProduto: "54454545",
-        qtdEstoque: 2)
-  ];
+  ProductController? _productController;
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      _productController =
+          Provider.of<ProductController>(context, listen: false);
+      _productController!.getAllProducts();
+    });
+  }
+
+  @override
+  void dispose() {
+    _productController!.isLoading = false;
+    _productController!.products = [];
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,45 +74,20 @@ class _ProductScreenState extends State<ProductScreen> {
                       ],
                     ),
                     SizedBox(height: size.height * 0.05),
-                    DataTable(
-                        columnSpacing: size.width <= 1000
-                            ? size.width * 0.07
-                            : size.width * 0.1,
-                        columns: const [
-                          DataColumn(label: Text("Id")),
-                          DataColumn(label: Text("Nome")),
-                          DataColumn(label: Text("Valor")),
-                          DataColumn(label: Text("Quantidade ")),
-                          DataColumn(label: Text("")),
-                        ],
-                        rows: products
-                            .map((product) => DataRow(
-                                  cells: [
-                                    DataCell(
-                                      Text(product.idProduto != null
-                                          ? product.idProduto.toString()
-                                          : ''),
-                                    ),
-                                    DataCell(
-                                      Text(product.nomeProduto != null
-                                          ? product.nomeProduto!
-                                          : ''),
-                                    ),
-                                    DataCell(
-                                      Text(product.valorProduto != null
-                                          ? 'R\$ ${product.idProduto}'
-                                          : ''),
-                                    ),
-                                    DataCell(
-                                      Text(product.qtdEstoque != null
-                                          ? product.idProduto.toString()
-                                          : ''),
-                                    ),
-                                    const DataCell(
-                                        Icon(Icons.arrow_forward_ios_outlined)),
-                                  ],
-                                ))
-                            .toList()),
+                    Consumer<ProductController>(
+                      builder: (context, productController, _) =>
+                          productController.isLoading
+                              ? const Center(child: CircularProgressIndicator())
+                              : productController.products.isEmpty
+                                  ? Center(
+                                      child: Image.asset(
+                                        'assets/images/products_not_found.png',
+                                        height: size.height * 0.5,
+                                      ),
+                                    )
+                                  : DataTableProduct(
+                                      produtos: productController.products),
+                    ),
                   ],
                 ),
               ),
@@ -120,7 +99,14 @@ class _ProductScreenState extends State<ProductScreen> {
               Padding(
                 padding: EdgeInsets.only(right: size.width * 0.02),
                 child: CustomButtonCircular(
-                    size.height * 0.05, "Adicionar produto", () {}),
+                  size.height * 0.05,
+                  size.width * 0.1,
+                  "Adicionar produto",
+                  () => showDialog(
+                    context: context,
+                    builder: (context) => const NewProduct(),
+                  ),
+                ),
               )
             ],
           )
