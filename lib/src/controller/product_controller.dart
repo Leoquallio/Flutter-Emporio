@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_emporio/src/repository.dart/product_repository.dart';
 
 import '../model/produto_model.dart';
+import '../repository/product_repository.dart';
 
 class ProductController extends ChangeNotifier {
-  ProductRepository _productRepository;
+  final ProductRepository _productRepository;
   List<Produto> products = [];
   bool isLoading = false;
 

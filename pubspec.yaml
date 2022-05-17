@@ -30,6 +30,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   dio: ^4.0.6
   dio_log: ^2.0.2
+  file_picker: ^4.5.1
   flutter:
     sdk: flutter
   pretty_dio_logger: ^1.1.1

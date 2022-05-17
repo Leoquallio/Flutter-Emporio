@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_emporio/src/controller/new_product_controller.dart';
 import 'package:flutter_emporio/src/controller/product_controller.dart';
+import 'package:flutter_emporio/src/repository/product_repository.dart';
 import 'package:flutter_emporio/src/themes/colors_app.dart';
-import 'package:flutter_emporio/src/view/widgets/custom_button_circular.dart';
+import 'package:flutter_emporio/src/view/product/components/data_table_product.dart';
+import 'package:flutter_emporio/src/view/product/components/new_product.dart';
+import 'package:flutter_emporio/src/widgets/custom_button_circular.dart';
 import 'package:provider/provider.dart';
 
 class ProductScreen extends StatefulWidget {
@@ -81,51 +85,8 @@ class _ProductScreenState extends State<ProductScreen> {
                                         height: size.height * 0.5,
                                       ),
                                     )
-                                  : DataTable(
-                                      columnSpacing: size.width <= 1000
-                                          ? size.width * 0.07
-                                          : size.width * 0.07,
-                                      columns: const [
-                                        DataColumn(label: Text("Id")),
-                                        DataColumn(label: Text("Nome")),
-                                        DataColumn(label: Text("Valor")),
-                                        DataColumn(label: Text("Quantidade ")),
-                                        DataColumn(label: Text("")),
-                                      ],
-                                      rows: productController.products
-                                          .map((product) => DataRow(
-                                                cells: [
-                                                  DataCell(
-                                                    Text(product.idProduto !=
-                                                            null
-                                                        ? product.idProduto
-                                                            .toString()
-                                                        : ''),
-                                                  ),
-                                                  DataCell(
-                                                    Text(product.nomeProduto !=
-                                                            null
-                                                        ? product.nomeProduto!
-                                                        : ''),
-                                                  ),
-                                                  DataCell(
-                                                    Text(product.valorProdutoInCents !=
-                                                            null
-                                                        ? 'R\$ ${product.valorProdutoInCents! / 1000}'
-                                                        : ''),
-                                                  ),
-                                                  DataCell(
-                                                    Text(product.qtdEstoque !=
-                                                            null
-                                                        ? product.qtdEstoque
-                                                            .toString()
-                                                        : ''),
-                                                  ),
-                                                  const DataCell(Icon(Icons
-                                                      .arrow_forward_ios_outlined)),
-                                                ],
-                                              ))
-                                          .toList()),
+                                  : DataTableProduct(
+                                      produtos: productController.products),
                     ),
                   ],
                 ),
@@ -138,7 +99,14 @@ class _ProductScreenState extends State<ProductScreen> {
               Padding(
                 padding: EdgeInsets.only(right: size.width * 0.02),
                 child: CustomButtonCircular(
-                    size.height * 0.05, "Adicionar produto", () {}),
+                  size.height * 0.05,
+                  size.width * 0.1,
+                  "Adicionar produto",
+                  () => showDialog(
+                    context: context,
+                    builder: (context) => const NewProduct(),
+                  ),
+                ),
               )
             ],
           )
