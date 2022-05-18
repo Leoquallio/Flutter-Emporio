@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:flutter_emporio/src/model/produto_form.dart';
 import 'package:flutter_emporio/src/utils/constants_utils.dart';
