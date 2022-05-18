@@ -34,7 +34,7 @@ class NewProductController extends ChangeNotifier {
     double priceInCents = price / 100;
     ProdutoForm produtoForm = ProdutoForm(
       nomeProduto: name,
-      dataValidadeProduto: expirationDate,
+      dataValidadeProduto: expirationDate.toString(),
       descricaoProduto: description,
       gtinProduto: gtin,
       valorProdutoInCents: priceInCents,

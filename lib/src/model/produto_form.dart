@@ -4,7 +4,7 @@ class ProdutoForm {
   String? nomeProduto, descricaoProduto;
   double? valorProdutoInCents;
   int? qtdEstoque;
-  DateTime? dataValidadeProduto;
+  String? dataValidadeProduto;
   String? gtinProduto;
   MultipartFile? imageProduto;
 
