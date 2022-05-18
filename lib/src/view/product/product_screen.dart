@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_emporio/src/controller/new_product_controller.dart';
 import 'package:flutter_emporio/src/controller/product_controller.dart';
-import 'package:flutter_emporio/src/repository/product_repository.dart';
 import 'package:flutter_emporio/src/themes/colors_app.dart';
 import 'package:flutter_emporio/src/view/product/components/data_table_product.dart';
 import 'package:flutter_emporio/src/view/product/components/new_product.dart';

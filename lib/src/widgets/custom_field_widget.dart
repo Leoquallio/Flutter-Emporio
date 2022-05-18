@@ -6,13 +6,15 @@ class CustomFieldWidget extends StatelessWidget {
   final double height;
   final double width;
   final String? textLabel;
+  final String? Function(String? string)? validator;
   const CustomFieldWidget(
       {Key? key,
       required this.height,
       required this.width,
       this.textEditingController,
       this.color,
-      this.textLabel})
+      this.textLabel,
+      this.validator})
       : super(key: key);
 
   @override
@@ -21,15 +23,16 @@ class CustomFieldWidget extends StatelessWidget {
       height: height,
       width: width,
       child: TextFormField(
-          controller: textEditingController ?? TextEditingController(),
-          decoration: InputDecoration(
-              fillColor:
-                  color ?? Theme.of(context).primaryColor.withOpacity(0.2),
-              filled: true,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              labelText: textLabel ?? '')),
+        validator: validator,
+        controller: textEditingController ?? TextEditingController(),
+        decoration: InputDecoration(
+            fillColor: color ?? Theme.of(context).primaryColor.withOpacity(0.2),
+            filled: true,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            labelText: textLabel ?? ''),
+      ),
     );
   }
 }
