@@ -16,7 +16,8 @@ class DataTableProduct extends StatelessWidget {
         DataColumn(label: Text("Id")),
         DataColumn(label: Text("Nome")),
         DataColumn(label: Text("Valor")),
-        DataColumn(label: Text("Estoque")),
+        DataColumn(label: Text("Qtd Estoque")),
+        DataColumn(label: Text("Data de validade")),
         DataColumn(label: Text("")),
       ],
       rows: produtos
@@ -33,13 +34,18 @@ class DataTableProduct extends StatelessWidget {
                         : ''),
                   ),
                   DataCell(
-                    Text(product.valorProdutoInCents != null
-                        ? 'R\$ ${product.valorProdutoInCents! * 100}'
+                    Text(product.valorProduto != null
+                        ? 'R\$ ${product.valorProduto!}'
                         : ''),
                   ),
                   DataCell(
                     Text(product.qtdEstoque != null
                         ? product.qtdEstoque.toString()
+                        : ''),
+                  ),
+                  DataCell(
+                    Text(product.dataValidadeProduto != null
+                        ? product.dataValidadeProduto.toString()
                         : ''),
                   ),
                   DataCell(

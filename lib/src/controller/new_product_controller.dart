@@ -6,6 +6,7 @@ import 'package:flutter_emporio/src/repository/product_repository.dart';
 
 class NewProductController extends ChangeNotifier {
   final ProductRepository _productRepository;
+  bool isLoading = false;
   MultipartFile? imageProduct;
   String? nameProduct;
   NewProductController(this._productRepository);
@@ -29,12 +30,14 @@ class NewProductController extends ChangeNotifier {
   Future<void> create(String name, String expirationDateString,
       String description, String gtin, String priceString, String estoque,
       {required Function onSucess, required Function onError}) async {
-    DateTime expirationDate = DateTime.parse(expirationDateString);
+    isLoading = true;
+    notifyListeners();
+    priceString = priceString.replaceAll(',', '.');
     double price = double.parse(priceString);
-    double priceInCents = price / 100;
+    double priceInCents = price * 100;
     ProdutoForm produtoForm = ProdutoForm(
       nomeProduto: name,
-      dataValidadeProduto: expirationDate.toString(),
+      dataValidadeProduto: expirationDateString,
       descricaoProduto: description,
       gtinProduto: gtin,
       valorProdutoInCents: priceInCents,
@@ -50,6 +53,8 @@ class NewProductController extends ChangeNotifier {
     } catch (e) {
       onError(e.toString());
     }
+    isLoading = false;
+    notifyListeners();
   }
 
   @override

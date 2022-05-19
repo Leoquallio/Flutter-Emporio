@@ -33,6 +33,7 @@ dependencies:
   file_picker: ^4.5.1
   flutter:
     sdk: flutter
+  mask_text_input_formatter: ^2.3.0
   pretty_dio_logger: ^1.1.1
   provider: ^6.0.2
 

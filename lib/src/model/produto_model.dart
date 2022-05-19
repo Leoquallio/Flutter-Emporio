@@ -1,6 +1,6 @@
 class Produto {
   String? nomeProduto, descricaoProduto;
-  double? valorProdutoInCents;
+  String? valorProduto;
   int? idProduto;
   int? qtdEstoque;
   String? dataValidadeProduto;
@@ -14,7 +14,7 @@ class Produto {
       this.descricaoProduto,
       this.gtinProduto,
       this.qtdEstoque,
-      this.valorProdutoInCents,
+      this.valorProduto,
       this.urlImagemProduto});
 
   Produto.fromJson(Map<String, dynamic> json) {
@@ -23,7 +23,8 @@ class Produto {
     dataValidadeProduto = json['dataValidadeProduto'];
     descricaoProduto = json['descricaoProduto'];
     qtdEstoque = json['qtdEstoque'];
-    valorProdutoInCents = json['valorProdutoInCents'];
+    valorProduto =
+        ((json['valorProdutoInCents'] / 100) as double).toStringAsFixed(2);
     gtinProduto = json['gtinProduto'].toString();
     urlImagemProduto = json['urlImagemProduto'];
   }

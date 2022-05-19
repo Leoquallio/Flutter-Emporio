@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomFieldWidget extends StatelessWidget {
   final TextEditingController? textEditingController;
@@ -6,7 +7,10 @@ class CustomFieldWidget extends StatelessWidget {
   final double height;
   final double width;
   final String? textLabel;
+  final String? prefixText;
+  final Function(String)? onChanged;
   final String? Function(String? string)? validator;
+  final List<TextInputFormatter>? formaters;
   const CustomFieldWidget(
       {Key? key,
       required this.height,
@@ -14,7 +18,10 @@ class CustomFieldWidget extends StatelessWidget {
       this.textEditingController,
       this.color,
       this.textLabel,
-      this.validator})
+      this.validator,
+      this.prefixText,
+      this.onChanged,
+      this.formaters})
       : super(key: key);
 
   @override
@@ -23,9 +30,12 @@ class CustomFieldWidget extends StatelessWidget {
       height: height,
       width: width,
       child: TextFormField(
+        inputFormatters: formaters,
         validator: validator,
         controller: textEditingController ?? TextEditingController(),
+        onChanged: onChanged,
         decoration: InputDecoration(
+            prefixText: prefixText ?? '',
             fillColor: color ?? Theme.of(context).primaryColor.withOpacity(0.2),
             filled: true,
             border: OutlineInputBorder(
