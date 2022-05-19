@@ -1,27 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_emporio/src/controller/new_product_controller.dart';
 import 'package:flutter_emporio/src/model/produto_model.dart';
 import 'package:flutter_emporio/src/view/product/components/fields_new_product.dart';
 
 import 'package:provider/provider.dart';
 
-class NewProduct extends StatefulWidget {
+import '../../../controller/product_page_controller.dart';
+
+class ProductPage extends StatefulWidget {
   final Produto? produto;
-  const NewProduct({Key? key, this.produto}) : super(key: key);
+  const ProductPage({Key? key, this.produto}) : super(key: key);
 
   @override
-  State<NewProduct> createState() => _NewProductState();
+  State<ProductPage> createState() => _ProductPageState();
 }
 
-class _NewProductState extends State<NewProduct> {
-  NewProductController? _newProductController;
+class _ProductPageState extends State<ProductPage> {
+  ProductPageController? _productPageController;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-      _newProductController =
-          Provider.of<NewProductController>(context, listen: false);
+      _productPageController =
+          Provider.of<ProductPageController>(context, listen: false);
     });
   }
 
@@ -38,7 +39,7 @@ class _NewProductState extends State<NewProduct> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Consumer<NewProductController>(
+              Consumer<ProductPageController>(
                 builder: (context, _, __) => widget.produto?.urlImagemProduto !=
                         null
                     ? Container(
@@ -48,10 +49,10 @@ class _NewProductState extends State<NewProduct> {
                         height: size.height * 0.15,
                         width: size.width * 0.15,
                         child: Image.network(widget.produto!.urlImagemProduto!))
-                    : null == _newProductController?.imageProduct
+                    : null == _productPageController?.imageProduct
                         ? GestureDetector(
                             onTap: () =>
-                                _newProductController?.getImageProduct(),
+                                _productPageController?.getImageProduct(),
                             child: Container(
                               decoration: BoxDecoration(
                                 border: Border.all(),
@@ -72,11 +73,11 @@ class _NewProductState extends State<NewProduct> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               const Icon(Icons.image),
-                              Text(_newProductController!.nameProduct!),
+                              Text(_productPageController!.nameProduct!),
                               const SizedBox(width: 10),
                               IconButton(
                                 onPressed: () =>
-                                    _newProductController?.clearImage(),
+                                    _productPageController?.clearImage(),
                                 icon: Icon(
                                   Icons.delete,
                                   color: Theme.of(context).primaryColor,
@@ -86,7 +87,7 @@ class _NewProductState extends State<NewProduct> {
                           ),
               ),
               Expanded(
-                child: FieldsNewProduct(produto: widget.produto),
+                child: FieldsProductPage(produto: widget.produto),
               )
             ],
           ),

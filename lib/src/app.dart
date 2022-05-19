@@ -29,15 +29,15 @@ class App extends StatelessWidget {
             Provider.of<CustomDio>(context, listen: false),
           ),
         ),
-        ChangeNotifierProvider<ProductController>(
+        ChangeNotifierProvider<ProductsController>(
           lazy: true,
-          create: (context) => ProductController(
+          create: (context) => ProductsController(
             Provider.of<ProductRepository>(context, listen: false),
           ),
         ),
-        ChangeNotifierProvider<NewProductController>(
+        ChangeNotifierProvider<ProductPageController>(
           lazy: true,
-          create: (context) => NewProductController(
+          create: (context) => ProductPageController(
             Provider.of<ProductRepository>(context, listen: false),
           ),
         ),

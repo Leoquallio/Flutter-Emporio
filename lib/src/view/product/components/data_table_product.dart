@@ -1,19 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_emporio/src/controller/controller.dart';
 import 'package:flutter_emporio/src/model/produto_model.dart';
+import 'package:flutter_emporio/src/utils/alerts.dart';
+import 'package:provider/provider.dart';
 
 import 'new_product.dart';
 
 class DataTableProduct extends StatelessWidget {
   final List<Produto> produtos;
-  const DataTableProduct({Key? key, required this.produtos}) : super(key: key);
+  final List<String> myMenuProduct = ['Visualizar', 'Deletar'];
+  late final ProductsController? _productsController;
+  late final Size? size;
+  DataTableProduct({Key? key, required this.produtos}) : super(key: key);
+
+  void onTapMenuProduct(String item, Produto product, BuildContext context) {
+    switch (item) {
+      case 'Visualizar':
+        showDialog(
+            context: context,
+            builder: (context) => ProductPage(produto: product));
+        break;
+      case 'Deletar':
+        _productsController?.deleteProduct(product.idProduto!, (message) {
+          _productsController?.getAllProducts();
+          Alerts.showSucess(context, message: message);
+        }, (error) {
+          Alerts.showError(context, message: error);
+        });
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    _productsController = Provider.of(context, listen: false);
     Size size = MediaQuery.of(context).size;
     return DataTable(
       columnSpacing: size.width <= 1000 ? size.width * 0.07 : size.width * 0.07,
       columns: const [
-        DataColumn(label: Text("Id")),
+        DataColumn(label: Text("Código")),
         DataColumn(label: Text("Nome")),
         DataColumn(label: Text("Valor")),
         DataColumn(label: Text("Qtd Estoque")),
@@ -24,8 +49,8 @@ class DataTableProduct extends StatelessWidget {
           .map((product) => DataRow(
                 cells: [
                   DataCell(
-                    Text(product.idProduto != null
-                        ? product.idProduto.toString()
+                    Text(product.gtinProduto != null
+                        ? product.gtinProduto.toString()
                         : ''),
                   ),
                   DataCell(
@@ -49,15 +74,18 @@ class DataTableProduct extends StatelessWidget {
                         : ''),
                   ),
                   DataCell(
-                    IconButton(
-                      icon: const Icon(Icons.arrow_forward_ios_outlined),
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (context) => NewProduct(produto: product));
-                      },
-                    ),
-                  ),
+                    PopupMenuButton<String>(
+                        onSelected: (value) =>
+                            onTapMenuProduct(value, product, context),
+                        itemBuilder: (BuildContext context) {
+                          return myMenuProduct.map((String choice) {
+                            return PopupMenuItem<String>(
+                              child: Text(choice),
+                              value: choice,
+                            );
+                          }).toList();
+                        }),
+                  )
                 ],
               ))
           .toList(),

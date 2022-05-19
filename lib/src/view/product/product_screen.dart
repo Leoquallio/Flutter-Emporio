@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_emporio/src/controller/product_controller.dart';
+import 'package:flutter_emporio/src/controller/products_controller.dart';
 import 'package:flutter_emporio/src/themes/colors_app.dart';
 import 'package:flutter_emporio/src/view/product/components/data_table_product.dart';
 import 'package:flutter_emporio/src/view/product/components/new_product.dart';
@@ -14,21 +14,21 @@ class ProductScreen extends StatefulWidget {
 }
 
 class _ProductScreenState extends State<ProductScreen> {
-  ProductController? _productController;
+  ProductsController? _ProductsController;
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-      _productController =
-          Provider.of<ProductController>(context, listen: false);
-      _productController!.getAllProducts();
+      _ProductsController =
+          Provider.of<ProductsController>(context, listen: false);
+      _ProductsController!.getAllProducts();
     });
   }
 
   @override
   void dispose() {
-    _productController!.isLoading = false;
-    _productController!.products = [];
+    _ProductsController!.isLoading = false;
+    _ProductsController!.products = [];
     super.dispose();
   }
 
@@ -72,11 +72,11 @@ class _ProductScreenState extends State<ProductScreen> {
                       ],
                     ),
                     SizedBox(height: size.height * 0.05),
-                    Consumer<ProductController>(
-                      builder: (context, productController, _) =>
-                          productController.isLoading
+                    Consumer<ProductsController>(
+                      builder: (context, ProductsController, _) =>
+                          ProductsController.isLoading
                               ? const Center(child: CircularProgressIndicator())
-                              : productController.products.isEmpty
+                              : ProductsController.products.isEmpty
                                   ? Center(
                                       child: Image.asset(
                                         'assets/images/products_not_found.png',
@@ -84,7 +84,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                       ),
                                     )
                                   : DataTableProduct(
-                                      produtos: productController.products),
+                                      produtos: ProductsController.products),
                     ),
                   ],
                 ),
@@ -102,7 +102,7 @@ class _ProductScreenState extends State<ProductScreen> {
                   "Adicionar produto",
                   () => showDialog(
                     context: context,
-                    builder: (context) => const NewProduct(),
+                    builder: (context) => const ProductPage(),
                   ),
                 ),
               )

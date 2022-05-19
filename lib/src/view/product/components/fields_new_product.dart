@@ -8,8 +8,8 @@ import 'package:flutter_emporio/src/widgets/custom_field_widget.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 
-class FieldsNewProduct extends StatelessWidget {
-  late final ProductController? _productController;
+class FieldsProductPage extends StatelessWidget {
+  late final ProductsController? _ProductsController;
   final Produto? produto;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
@@ -21,7 +21,7 @@ class FieldsNewProduct extends StatelessWidget {
   final MaskTextInputFormatter dateFormatter =
       MaskTextInputFormatter(mask: '##/##/####');
 
-  FieldsNewProduct({Key? key, this.produto}) : super(key: key) {
+  FieldsProductPage({Key? key, this.produto}) : super(key: key) {
     _nameController.text = produto?.nomeProduto ?? '';
     _descriptionController.text = produto?.descricaoProduto ?? '';
     _gtinController.text = produto?.gtinProduto ?? '';
@@ -33,7 +33,8 @@ class FieldsNewProduct extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
-    _productController = Provider.of<ProductController>(context, listen: false);
+    _ProductsController =
+        Provider.of<ProductsController>(context, listen: false);
     Size size = MediaQuery.of(context).size;
     return Form(
       key: _formKey,
@@ -123,12 +124,12 @@ class FieldsNewProduct extends StatelessWidget {
             textLabel: 'Validade',
             formaters: [dateFormatter],
           ),
-          Consumer<NewProductController>(
-            builder: (context, newProductController, child) =>
+          Consumer<ProductPageController>(
+            builder: (context, productPageController, child) =>
                 CustomButtonCircular(
                     size.height * 0.05, size.width * 0.1, 'Salvar', () {
               if (_formKey.currentState!.validate()) {
-                newProductController.create(
+                productPageController.create(
                   _nameController.text,
                   _expirationController.text,
                   _descriptionController.text,
@@ -137,21 +138,15 @@ class FieldsNewProduct extends StatelessWidget {
                   _estoqueController.text,
                   onSucess: (String message) {
                     Navigator.pop(context);
-                    _productController?.getAllProducts();
-                    Alerts.showSucess(context,
-                        height: size.height * 0.3,
-                        width: size.width * 0.4,
-                        message: message);
+                    _ProductsController?.getAllProducts();
+                    Alerts.showSucess(context, message: message);
                   },
                   onError: (String message) {
-                    Alerts.showError(context,
-                        height: size.height * 0.2,
-                        width: size.width * 0.2,
-                        message: message);
+                    Alerts.showError(context, message: message);
                   },
                 );
               }
-            }, isLoading: newProductController.isLoading),
+            }, isLoading: productPageController.isLoading),
           )
         ],
       ),

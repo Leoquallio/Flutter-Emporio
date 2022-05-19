@@ -41,4 +41,19 @@ class ProductRepository {
       throw Exception("Conexão com o servidor falhou!");
     }
   }
+
+  Future<Response> delete(int codigoProduto) async {
+    try {
+      Response _response =
+          await _customDio.dio.delete("$baseUrl/produto/$codigoProduto");
+      return _response;
+    } on DioError catch (error) {
+      throw DioError(
+          error: error,
+          requestOptions: error.requestOptions,
+          response: error.response);
+    } catch (e) {
+      throw Exception("Conexão com o servidor falhou!");
+    }
+  }
 }

@@ -4,12 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_emporio/src/model/produto_form.dart';
 import 'package:flutter_emporio/src/repository/product_repository.dart';
 
-class NewProductController extends ChangeNotifier {
+class ProductPageController extends ChangeNotifier {
   final ProductRepository _productRepository;
   bool isLoading = false;
   MultipartFile? imageProduct;
   String? nameProduct;
-  NewProductController(this._productRepository);
+  ProductPageController(this._productRepository);
 
   Future<void> getImageProduct() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
