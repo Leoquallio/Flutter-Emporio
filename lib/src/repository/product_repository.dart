@@ -33,11 +33,13 @@ class ProductRepository {
           await _customDio.dio.post("$baseUrl/produto/", data: formDataProduto);
       return _response;
     } on DioError catch (error) {
+      image?.finalize();
       throw DioError(
           error: error,
           requestOptions: error.requestOptions,
           response: error.response);
     } catch (e) {
+      image?.finalize();
       throw Exception("Conexão com o servidor falhou!");
     }
   }
@@ -50,16 +52,19 @@ class ProductRepository {
           MapEntry("imageProduto", image);
       formDataProduto.files.add(mapImage);
     }
+
     try {
       Response _response = await _customDio.dio
           .put("$baseUrl/produto/$codigoProduto", data: formDataProduto);
       return _response;
     } on DioError catch (error) {
+      image?.finalize();
       throw DioError(
           error: error,
           requestOptions: error.requestOptions,
           response: error.response);
     } catch (e) {
+      image?.finalize();
       throw Exception("Conexão com o servidor falhou!");
     }
   }
