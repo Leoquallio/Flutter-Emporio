@@ -7,17 +7,13 @@ import 'package:flutter_emporio/src/repository/product_repository.dart';
 class ProductPageController extends ChangeNotifier {
   final ProductRepository _productRepository;
   bool isLoading = false;
-  MultipartFile? imageProduct;
+  FilePickerResult? imageProduct;
   String? nameProduct;
   ProductPageController(this._productRepository);
 
   Future<void> getImageProduct() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
-    if (result != null) {
-      imageProduct = MultipartFile.fromBytes(result.files.single.bytes!,
-          filename: result.files.single.name);
-      nameProduct = result.files.single.name;
-    }
+    imageProduct = await FilePicker.platform.pickFiles();
+    nameProduct = imageProduct?.files.single.name;
     notifyListeners();
   }
 

@@ -24,10 +24,12 @@ class _ProductWidgetState extends State<ProductWidget> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {});
-    _productsController =
-        Provider.of<ProductsController>(context, listen: false);
-    _productsController!.getAllProducts();
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      _productsController =
+          Provider.of<ProductsController>(context, listen: false);
+      _productsController!.getAllProducts();
+    });
+
     produtoEdit =
         widget.produto != null ? Produto.copyWith(widget.produto) : null;
   }
