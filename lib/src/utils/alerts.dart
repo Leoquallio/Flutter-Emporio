@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 
 abstract class Alerts {
   static void showSucess(BuildContext context,
-      {required double height,
-      required double width,
-      required String message,
-      int? seconds}) {
+      {required String message, int? seconds}) {
+    Size size = MediaQuery.of(context).size;
     showDialog(
         context: context,
         builder: (context) {
@@ -14,8 +12,8 @@ abstract class Alerts {
           });
           return Dialog(
             child: SizedBox(
-              height: height,
-              width: width,
+              height: size.height * 0.3,
+              width: size.height * 0.4,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -33,10 +31,8 @@ abstract class Alerts {
   }
 
   static void showError(BuildContext context,
-      {required double height,
-      required String message,
-      required double width,
-      int? seconds}) {
+      {required String message, int? seconds}) {
+    Size size = MediaQuery.of(context).size;
     Future.delayed(Duration(seconds: seconds ?? 2), () {
       Navigator.pop(context);
     });
@@ -45,8 +41,8 @@ abstract class Alerts {
         builder: (context) {
           return Dialog(
             child: SizedBox(
-              height: height,
-              width: width,
+              height: size.height * 0.3,
+              width: size.height * 0.4,
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,

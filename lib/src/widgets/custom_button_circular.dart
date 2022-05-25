@@ -6,9 +6,10 @@ class CustomButtonCircular extends StatelessWidget {
   final double width;
   final String textButton;
   final Function onTap;
+  final bool isLoading;
   const CustomButtonCircular(
       this.height, this.width, this.textButton, this.onTap,
-      {Key? key})
+      {Key? key, this.isLoading = false})
       : super(key: key);
 
   @override
@@ -24,10 +25,14 @@ class CustomButtonCircular extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Center(
-            child: Text(
-              textButton,
-              style: const TextStyle(color: Colors.white),
-            ),
+            child: isLoading
+                ? const CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                  )
+                : Text(
+                    textButton,
+                    style: const TextStyle(color: Colors.white),
+                  ),
           ),
         ),
       ),

@@ -1,30 +1,60 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_emporio/src/controller/controller.dart';
 import 'package:flutter_emporio/src/model/produto_model.dart';
+import 'package:flutter_emporio/src/repository/product_repository.dart';
+import 'package:flutter_emporio/src/utils/alerts.dart';
+import 'package:provider/provider.dart';
 
-import 'new_product.dart';
+import 'product_widget.dart';
 
 class DataTableProduct extends StatelessWidget {
   final List<Produto> produtos;
-  const DataTableProduct({Key? key, required this.produtos}) : super(key: key);
+  final List<String> myMenuProduct = ['Visualizar', 'Deletar'];
+  late final ProductsController? _productsController;
+  late final Size? size;
+  DataTableProduct({Key? key, required this.produtos}) : super(key: key);
+
+  void onTapMenuProduct(String item, Produto product, BuildContext context) {
+    switch (item) {
+      case 'Visualizar':
+        showDialog(
+          context: context,
+          builder: (context) => ProductWidget(
+            produto: product,
+          ),
+        );
+        break;
+      case 'Deletar':
+        _productsController?.deleteProduct(product.idProduto!, (message) {
+          _productsController?.getAllProducts();
+          Alerts.showSucess(context, message: message);
+        }, (error) {
+          Alerts.showError(context, message: error);
+        });
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    _productsController = Provider.of(context, listen: false);
     Size size = MediaQuery.of(context).size;
     return DataTable(
       columnSpacing: size.width <= 1000 ? size.width * 0.07 : size.width * 0.07,
       columns: const [
-        DataColumn(label: Text("Id")),
+        DataColumn(label: Text("Código")),
         DataColumn(label: Text("Nome")),
         DataColumn(label: Text("Valor")),
-        DataColumn(label: Text("Estoque")),
+        DataColumn(label: Text("Qtd Estoque")),
+        DataColumn(label: Text("Data de validade")),
         DataColumn(label: Text("")),
       ],
       rows: produtos
           .map((product) => DataRow(
                 cells: [
                   DataCell(
-                    Text(product.idProduto != null
-                        ? product.idProduto.toString()
+                    Text(product.gtinProduto != null
+                        ? product.gtinProduto.toString()
                         : ''),
                   ),
                   DataCell(
@@ -33,8 +63,8 @@ class DataTableProduct extends StatelessWidget {
                         : ''),
                   ),
                   DataCell(
-                    Text(product.valorProdutoInCents != null
-                        ? 'R\$ ${product.valorProdutoInCents! * 100}'
+                    Text(product.valorProduto != null
+                        ? 'R\$ ${product.valorProduto!}'
                         : ''),
                   ),
                   DataCell(
@@ -43,15 +73,23 @@ class DataTableProduct extends StatelessWidget {
                         : ''),
                   ),
                   DataCell(
-                    IconButton(
-                      icon: const Icon(Icons.arrow_forward_ios_outlined),
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (context) => NewProduct(produto: product));
-                      },
-                    ),
+                    Text(product.dataValidadeProduto != null
+                        ? product.dataValidadeProduto.toString()
+                        : ''),
                   ),
+                  DataCell(
+                    PopupMenuButton<String>(
+                        onSelected: (value) =>
+                            onTapMenuProduct(value, product, context),
+                        itemBuilder: (BuildContext context) {
+                          return myMenuProduct.map((String choice) {
+                            return PopupMenuItem<String>(
+                              child: Text(choice),
+                              value: choice,
+                            );
+                          }).toList();
+                        }),
+                  )
                 ],
               ))
           .toList(),

@@ -1,19 +1,24 @@
 abstract class Validators {
-  static String? validadeCodigo(String? codigo) {
+  static bool isDouble(String world) {
     try {
-      int.parse(codigo!);
-      return null;
+      world = world.replaceAll(',', '.');
+      double.parse(world);
+      return true;
     } catch (e) {
-      return 'Código inválido!';
+      return false;
     }
   }
 
-  static String? validatePrice(String? price) {
+  static bool isInt(String world) {
     try {
-      double.parse(price!);
-      return null;
+      int.parse(world);
+      return true;
     } catch (e) {
-      return 'Valor inválido!';
+      return false;
     }
+  }
+
+  static bool isEmpty(String? world) {
+    return world == null || world.isEmpty;
   }
 }

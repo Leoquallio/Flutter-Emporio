@@ -1,21 +1,18 @@
-import 'package:dio/dio.dart';
-
 class ProdutoForm {
   String? nomeProduto, descricaoProduto;
   double? valorProdutoInCents;
   int? qtdEstoque;
-  DateTime? dataValidadeProduto;
+  String? dataValidadeProduto;
   String? gtinProduto;
-  MultipartFile? imageProduto;
 
-  ProdutoForm(
-      {this.nomeProduto,
-      this.dataValidadeProduto,
-      this.descricaoProduto,
-      this.gtinProduto,
-      this.qtdEstoque,
-      this.valorProdutoInCents,
-      this.imageProduto});
+  ProdutoForm({
+    this.nomeProduto,
+    this.dataValidadeProduto,
+    this.descricaoProduto,
+    this.gtinProduto,
+    this.qtdEstoque,
+    this.valorProdutoInCents,
+  });
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> json = <String, dynamic>{};
@@ -25,7 +22,6 @@ class ProdutoForm {
     json['qtdEstoque'] = qtdEstoque;
     json['dataValidadeProduto'] = dataValidadeProduto;
     json['gtinProduto'] = gtinProduto;
-    json['imageProduto'] = imageProduto;
     return json;
   }
 }

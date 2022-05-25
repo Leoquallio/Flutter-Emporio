@@ -1,6 +1,6 @@
 class Produto {
   String? nomeProduto, descricaoProduto;
-  double? valorProdutoInCents;
+  String? valorProduto;
   int? idProduto;
   int? qtdEstoque;
   String? dataValidadeProduto;
@@ -14,8 +14,19 @@ class Produto {
       this.descricaoProduto,
       this.gtinProduto,
       this.qtdEstoque,
-      this.valorProdutoInCents,
+      this.valorProduto,
       this.urlImagemProduto});
+
+  Produto.copyWith(Produto? produto) {
+    idProduto = produto?.idProduto;
+    gtinProduto = produto?.gtinProduto;
+    nomeProduto = produto?.nomeProduto;
+    dataValidadeProduto = produto?.dataValidadeProduto;
+    descricaoProduto = produto?.descricaoProduto;
+    qtdEstoque = produto?.qtdEstoque;
+    valorProduto = produto?.valorProduto;
+    urlImagemProduto = produto?.urlImagemProduto;
+  }
 
   Produto.fromJson(Map<String, dynamic> json) {
     idProduto = json['idProduto'];
@@ -23,7 +34,8 @@ class Produto {
     dataValidadeProduto = json['dataValidadeProduto'];
     descricaoProduto = json['descricaoProduto'];
     qtdEstoque = json['qtdEstoque'];
-    valorProdutoInCents = json['valorProdutoInCents'];
+    valorProduto =
+        ((json['valorProdutoInCents'] / 100) as double).toStringAsFixed(2);
     gtinProduto = json['gtinProduto'].toString();
     urlImagemProduto = json['urlImagemProduto'];
   }

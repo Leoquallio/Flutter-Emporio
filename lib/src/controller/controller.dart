@@ -1,2 +1,2 @@
-export 'new_product_controller.dart';
-export 'product_controller.dart';
+export 'product_page_controller.dart';
+export 'products_controller.dart';
