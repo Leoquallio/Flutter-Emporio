@@ -42,10 +42,47 @@ class ProductRepository {
     }
   }
 
+  Future<Response> update(
+      int codigoProduto, ProdutoForm produtoForm, MultipartFile? image) async {
+    FormData formDataProduto = FormData.fromMap(produtoForm.toJson());
+    if (image != null) {
+      MapEntry<String, MultipartFile> mapImage =
+          MapEntry("imageProduto", image);
+      formDataProduto.files.add(mapImage);
+    }
+    try {
+      Response _response = await _customDio.dio
+          .put("$baseUrl/produto/$codigoProduto", data: formDataProduto);
+      return _response;
+    } on DioError catch (error) {
+      throw DioError(
+          error: error,
+          requestOptions: error.requestOptions,
+          response: error.response);
+    } catch (e) {
+      throw Exception("Conexão com o servidor falhou!");
+    }
+  }
+
   Future<Response> delete(int codigoProduto) async {
     try {
       Response _response =
           await _customDio.dio.delete("$baseUrl/produto/$codigoProduto");
+      return _response;
+    } on DioError catch (error) {
+      throw DioError(
+          error: error,
+          requestOptions: error.requestOptions,
+          response: error.response);
+    } catch (e) {
+      throw Exception("Conexão com o servidor falhou!");
+    }
+  }
+
+  Future<Response> deletePhotoProduct(int codigoProduto) async {
+    try {
+      Response _response =
+          await _customDio.dio.delete("$baseUrl/produto/$codigoProduto/file");
       return _response;
     } on DioError catch (error) {
       throw DioError(

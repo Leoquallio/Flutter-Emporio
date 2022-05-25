@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_emporio/src/controller/controller.dart';
 import 'package:flutter_emporio/src/model/produto_model.dart';
+import 'package:flutter_emporio/src/repository/product_repository.dart';
 import 'package:flutter_emporio/src/utils/alerts.dart';
 import 'package:provider/provider.dart';
 
-import 'new_product.dart';
+import 'product_widget.dart';
 
 class DataTableProduct extends StatelessWidget {
   final List<Produto> produtos;
@@ -17,8 +18,11 @@ class DataTableProduct extends StatelessWidget {
     switch (item) {
       case 'Visualizar':
         showDialog(
-            context: context,
-            builder: (context) => ProductPage(produto: product));
+          context: context,
+          builder: (context) => ProductWidget(
+            produto: product,
+          ),
+        );
         break;
       case 'Deletar':
         _productsController?.deleteProduct(product.idProduto!, (message) {

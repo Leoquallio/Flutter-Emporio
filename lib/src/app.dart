@@ -35,12 +35,6 @@ class App extends StatelessWidget {
             Provider.of<ProductRepository>(context, listen: false),
           ),
         ),
-        ChangeNotifierProvider<ProductPageController>(
-          lazy: true,
-          create: (context) => ProductPageController(
-            Provider.of<ProductRepository>(context, listen: false),
-          ),
-        ),
       ],
       child: MaterialApp(
           title: 'Empório da cidade',

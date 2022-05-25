@@ -17,6 +17,17 @@ class Produto {
       this.valorProduto,
       this.urlImagemProduto});
 
+  Produto.copyWith(Produto? produto) {
+    idProduto = produto?.idProduto;
+    gtinProduto = produto?.gtinProduto;
+    nomeProduto = produto?.nomeProduto;
+    dataValidadeProduto = produto?.dataValidadeProduto;
+    descricaoProduto = produto?.descricaoProduto;
+    qtdEstoque = produto?.qtdEstoque;
+    valorProduto = produto?.valorProduto;
+    urlImagemProduto = produto?.urlImagemProduto;
+  }
+
   Produto.fromJson(Map<String, dynamic> json) {
     idProduto = json['idProduto'];
     nomeProduto = json["nomeProduto"];

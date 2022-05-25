@@ -9,7 +9,7 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 
 class FieldsProductPage extends StatelessWidget {
-  late final ProductsController? _ProductsController;
+  late final ProductsController? _productsController;
   final Produto? produto;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
@@ -25,7 +25,8 @@ class FieldsProductPage extends StatelessWidget {
     _nameController.text = produto?.nomeProduto ?? '';
     _descriptionController.text = produto?.descricaoProduto ?? '';
     _gtinController.text = produto?.gtinProduto ?? '';
-    _estoqueController.text = produto?.qtdEstoque.toString() ?? '';
+    _estoqueController.text =
+        produto?.qtdEstoque != null ? produto!.qtdEstoque.toString() : '';
     _expirationController.text = produto?.dataValidadeProduto ?? '';
     String valorProduto =
         produto?.valorProduto != null ? (produto!.valorProduto!) : '';
@@ -33,7 +34,7 @@ class FieldsProductPage extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
-    _ProductsController =
+    _productsController =
         Provider.of<ProductsController>(context, listen: false);
     Size size = MediaQuery.of(context).size;
     return Form(
@@ -126,25 +127,43 @@ class FieldsProductPage extends StatelessWidget {
           ),
           Consumer<ProductPageController>(
             builder: (context, productPageController, child) =>
-                CustomButtonCircular(
-                    size.height * 0.05, size.width * 0.1, 'Salvar', () {
+                CustomButtonCircular(size.height * 0.05, size.width * 0.1,
+                    produto != null ? 'Atualizar' : 'Salvar', () {
               if (_formKey.currentState!.validate()) {
-                productPageController.create(
-                  _nameController.text,
-                  _expirationController.text,
-                  _descriptionController.text,
-                  _gtinController.text,
-                  _priceController.text,
-                  _estoqueController.text,
-                  onSucess: (String message) {
-                    Navigator.pop(context);
-                    _ProductsController?.getAllProducts();
-                    Alerts.showSucess(context, message: message);
-                  },
-                  onError: (String message) {
-                    Alerts.showError(context, message: message);
-                  },
-                );
+                produto != null
+                    ? productPageController.update(
+                        produto!.idProduto!,
+                        _nameController.text,
+                        _expirationController.text,
+                        _descriptionController.text,
+                        _gtinController.text,
+                        _priceController.text,
+                        _estoqueController.text,
+                        onSucess: (String message) {
+                          Navigator.pop(context);
+                          _productsController?.getAllProducts();
+                          Alerts.showSucess(context, message: message);
+                        },
+                        onError: (String message) {
+                          Alerts.showError(context, message: message);
+                        },
+                      )
+                    : productPageController.create(
+                        _nameController.text,
+                        _expirationController.text,
+                        _descriptionController.text,
+                        _gtinController.text,
+                        _priceController.text,
+                        _estoqueController.text,
+                        onSucess: (String message) {
+                          Navigator.pop(context);
+                          _productsController?.getAllProducts();
+                          Alerts.showSucess(context, message: message);
+                        },
+                        onError: (String message) {
+                          Alerts.showError(context, message: message);
+                        },
+                      );
               }
             }, isLoading: productPageController.isLoading),
           )

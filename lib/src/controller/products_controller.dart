@@ -29,6 +29,24 @@ class ProductsController extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> updateProduct(
+      int idProduto, Function onSucess, Function onError) async {
+    isLoadingDelete = true;
+    notifyListeners();
+    try {
+      Response response = await _productRepository.delete(idProduto);
+      onSucess(response.data['message']);
+    } on DioError catch (erro) {
+      String message =
+          erro.response?.data['message'] ?? 'Conexão com o servidor falhou!';
+      onError(message);
+    } catch (e) {
+      onError(e.toString());
+    }
+    isLoadingDelete = false;
+    notifyListeners();
+  }
+
   Future<void> deleteProduct(
       int idProduto, Function onSucess, Function onError) async {
     isLoadingDelete = true;
