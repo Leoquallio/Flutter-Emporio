@@ -10,11 +10,11 @@ class CustomDrawer extends StatelessWidget {
       : super(key: key);
 
   final List<String> listMenuDrawer = [
-    'Dashboard',
+    // 'Dashboard',
     'Produtos',
-    'Vendas',
-    'Clientes',
-    'Fornecedores'
+    // 'Vendas',
+    // 'Clientes',
+    // 'Fornecedores'
   ];
 
   @override
